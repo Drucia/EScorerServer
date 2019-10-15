@@ -1,27 +1,33 @@
 package com.example.EScorerServer.controller;
 
 import com.example.EScorerServer.model.User;
-import com.example.EScorerServer.service.UserRepository;
-import org.springframework.stereotype.Controller;
+import com.example.EScorerServer.service.IEScorerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping(path="/users")
 public class UserController {
 
-    private UserRepository repository;
+    @Autowired
+    private IEScorerRepository.UserRep repository;
 
-    @RequestMapping(value = "/users")
+    @GetMapping
     public String index()
     {
         return "users";
     }
 
-    @PostMapping(path="/add")
-    public @ResponseBody String addNewUser(@RequestBody User user)
+    @PostMapping
+    public @ResponseBody User addNewUser(@RequestBody User user)
     {
         repository.save(user);
-        return "add";
+        return user;
     }
 
+    @GetMapping("/{id}")
+    public @ResponseBody User getUserById(@PathVariable String id)
+    {
+        return repository.getUserById(id);
+    }
 }

@@ -7,21 +7,22 @@ public class User {
 
     private String surname;
 
-    private String fullName;
-
     private Boolean isReferee;
 
     private String certificate;
 
+    private RefereeClass refereeClass;
+
     public User(){}
 
-    public User(String id, String name, String surname, String fullName, Boolean isReferee, String certificate) {
+    public User(String id, String name, String surname, Boolean isReferee, String certificate,
+                RefereeClass refereeClass) {
         this.id = id;
         this.name = name;
         this.surname = surname;
-        this.fullName = fullName;
         this.isReferee = isReferee;
         this.certificate = certificate;
+        this.refereeClass = refereeClass;
     }
 
     public String getId() {
@@ -49,11 +50,7 @@ public class User {
     }
 
     public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+        return name + " " + surname;
     }
 
     public Boolean getReferee() {
