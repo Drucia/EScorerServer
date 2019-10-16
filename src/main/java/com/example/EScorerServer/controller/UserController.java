@@ -1,7 +1,7 @@
 package com.example.EScorerServer.controller;
 
 import com.example.EScorerServer.model.User;
-import com.example.EScorerServer.service.IEScorerRepository;
+import com.example.EScorerServer.service.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    private IEScorerRepository.UserRep repository;
+    private UserRepository repository;
 
     @GetMapping
-    public String index()
+    public @ResponseBody Iterable<User> index()
     {
-        return "users";
+        return repository.findAll();
     }
 
     @PostMapping
@@ -28,6 +28,6 @@ public class UserController {
     @GetMapping("/{id}")
     public @ResponseBody User getUserById(@PathVariable String id)
     {
-        return repository.getUserById(id);
+        return repository.findById(id).get();
     }
 }

@@ -1,28 +1,26 @@
 package com.example.EScorerServer.controller;
 
 import com.example.EScorerServer.model.RefereeClass;
-import com.example.EScorerServer.service.IEScorerRepository;
+import com.example.EScorerServer.service.RefereeClassesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping(path="/refereeClasses")
 public class RefereeClassController {
 
     @Autowired
-    private IEScorerRepository.RefereeClassRep repository;
+    private RefereeClassesRepository repository;
 
-    @PostMapping(path="/add")
-    public @ResponseBody String addRefereeClass(@RequestBody RefereeClass refereeClass)
+    @PostMapping()
+    public @ResponseBody RefereeClass addRefereeClass(@RequestBody RefereeClass refereeClass)
     {
-        repository.save(refereeClass);
-        return "Saved";
+        return repository.save(refereeClass);
     }
 
-    @GetMapping(path="/all")
+    @GetMapping
     public @ResponseBody Iterable<RefereeClass> getAllRefereeClasses()
     {
-        return repository.loadAll();
+        return repository.findAll();
     }
 }

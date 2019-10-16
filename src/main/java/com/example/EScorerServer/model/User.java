@@ -1,22 +1,36 @@
 package com.example.EScorerServer.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="users")
 public class User {
+    @Id
+    @Column(name="ID")
     private String id;
 
+    @Column(name="NAME")
     private String name;
 
+    @Column(name="SURNAME")
     private String surname;
 
+    @Column(name="IS_REFEREE")
     private Boolean isReferee;
 
+    @Column(name="CERTIFICATE")
     private String certificate;
 
-    private RefereeClass refereeClass;
+    @Column(name="REFEREE_CLASS")
+    private String refereeClass;
 
     public User(){}
 
     public User(String id, String name, String surname, Boolean isReferee, String certificate,
-                RefereeClass refereeClass) {
+                String refereeClass) {
         this.id = id;
         this.name = name;
         this.surname = surname;
