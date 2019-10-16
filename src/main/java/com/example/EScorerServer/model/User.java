@@ -19,7 +19,7 @@ public class User {
     private String surname;
 
     @Column(name="IS_REFEREE")
-    private Boolean isReferee;
+    private boolean isReferee;
 
     @Column(name="CERTIFICATE")
     private String certificate;
@@ -29,7 +29,7 @@ public class User {
 
     public User(){}
 
-    public User(String id, String name, String surname, Boolean isReferee, String certificate,
+    public User(String id, String name, String surname, boolean isReferee, String certificate,
                 String refereeClass) {
         this.id = id;
         this.name = name;
@@ -63,15 +63,11 @@ public class User {
         this.surname = surname;
     }
 
-    public String getFullName() {
-        return name + " " + surname;
-    }
-
-    public Boolean getReferee() {
+    public boolean getIsReferee() {
         return isReferee;
     }
 
-    public void setReferee(Boolean referee) {
+    public void setIsReferee(boolean referee) {
         isReferee = referee;
     }
 
@@ -82,4 +78,17 @@ public class User {
     public void setCertificate(String certificate) {
         this.certificate = certificate;
     }
+
+    public String getRefereeClass() {
+        return refereeClass;
+    }
+
+    public void setRefereeClass(String refereeClass) {
+        this.refereeClass = refereeClass;
+    }
+
+    public String getFullName() {
+        return name + " " + surname;
+    }
+
 }

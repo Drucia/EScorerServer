@@ -21,8 +21,7 @@ public class UserController {
     @PostMapping
     public @ResponseBody User addNewUser(@RequestBody User user)
     {
-        repository.save(user);
-        return user;
+        return repository.save(user);
     }
 
     @GetMapping("/{id}")
