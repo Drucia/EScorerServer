@@ -1,5 +1,6 @@
 package com.example.EScorerServer.controller;
 
+import com.example.EScorerServer.errors.UserNotFoundException;
 import com.example.EScorerServer.model.User;
 import com.example.EScorerServer.service.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class UserController {
     }
 
     @PostMapping
-    public @ResponseBody User addNewUser(@RequestBody User user)
+    public @ResponseBody User updateUser(@RequestBody User user)
     {
         return repository.save(user);
     }
@@ -27,6 +28,7 @@ public class UserController {
     @GetMapping("/{id}")
     public @ResponseBody User getUserById(@PathVariable String id)
     {
-        return repository.findById(id).get();
+        return repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
     }
 }
