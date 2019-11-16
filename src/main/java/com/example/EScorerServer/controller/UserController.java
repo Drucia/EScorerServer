@@ -65,7 +65,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}/teams")
-    public void updateAllTeam(@PathVariable String id, @RequestBody Pair<Team, Player> pair)
+    public @ResponseBody Pair<Team, Player> updateAllTeam(@PathVariable String id, @RequestBody Pair<Team, Player> pair)
     {
         Team team = pair.getTeam();
         team.setUserId(id);
@@ -73,5 +73,7 @@ public class UserController {
         List<Player> newPlayers = pair.getPlayers().stream().peek(player -> player.setTeam(newTeam))
                 .collect(Collectors.toList());
         playerController.saveSeveralPlayers(pair.getTeam().getId(), newPlayers);
+
+        return new Pair<>(newTeam, newPlayers);
     }
 }
