@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    // Let Spring BasicErrorController handle the exception, we just override the status code
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<CustomErrorResponse> customHandleNotFound(Exception ex, WebRequest request) {
         CustomErrorResponse response = new CustomErrorResponse();
