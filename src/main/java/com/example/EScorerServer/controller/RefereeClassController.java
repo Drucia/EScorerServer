@@ -1,7 +1,7 @@
 package com.example.EScorerServer.controller;
 
 import com.example.EScorerServer.model.RefereeClass;
-import com.example.EScorerServer.service.RefereeClassesRepository;
+import com.example.EScorerServer.repository.RefereeClassesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

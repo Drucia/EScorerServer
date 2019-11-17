@@ -23,6 +23,15 @@ public class Team {
     @OneToMany(mappedBy = "team")
     private Set<Player> players;
 
+    @OneToMany(mappedBy = "host_team")
+    private Set<Match> matchesAsHostTeam;
+
+    @OneToMany(mappedBy = "guest_team")
+    private Set<Match> matchesAsGuestTeam;
+
+    @OneToMany(mappedBy = "winner")
+    private Set<Summary> matchesWon;
+
     public Team(){}
 
     public Team(String name, String shortName, String userId) {

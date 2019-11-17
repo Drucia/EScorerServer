@@ -1,4 +1,4 @@
-package com.example.EScorerServer.service;
+package com.example.EScorerServer.repository;
 
 import com.example.EScorerServer.model.Player;
 import com.example.EScorerServer.model.Team;

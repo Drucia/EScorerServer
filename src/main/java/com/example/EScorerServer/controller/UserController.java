@@ -1,16 +1,16 @@
 package com.example.EScorerServer.controller;
 
 import com.example.EScorerServer.errors.UserNotFoundException;
-import com.example.EScorerServer.model.Pair;
-import com.example.EScorerServer.model.Player;
-import com.example.EScorerServer.model.Team;
-import com.example.EScorerServer.model.User;
-import com.example.EScorerServer.service.UserRepository;
+import com.example.EScorerServer.model.*;
+import com.example.EScorerServer.response.SummaryResponse;
+import com.example.EScorerServer.repository.UserRepository;
+import com.example.EScorerServer.service.MatchService;
+import com.example.EScorerServer.service.SetsInfoService;
+import com.example.EScorerServer.service.SummaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -23,6 +23,12 @@ public class UserController {
     private PlayerController playerController;
     @Autowired
     private TeamController teamController;
+    @Autowired
+    private MatchController matchController;
+    @Autowired
+    private SummaryController summaryController;
+    @Autowired
+    private SetInfoController setInfoController;
 
     @GetMapping
     public @ResponseBody Iterable<User> index()
@@ -75,5 +81,26 @@ public class UserController {
         playerController.saveSeveralPlayers(pair.getTeam().getId(), newPlayers);
 
         return new Pair<>(newTeam, newPlayers);
+    }
+
+    @PostMapping("/{id}/matches")
+    public @ResponseBody SummaryResponse saveSummaryOfMatch(@PathVariable String id,
+                                                            @RequestBody SummaryResponse matchSummary)
+    {
+        Match match = MatchService.getMatchFromSummaryResponseAndSummary(matchSummary);
+        match = matchController.saveMatch(id, match);
+        Summary summary = SummaryService.getSummaryFromSummaryResponse(matchSummary, match);
+        summary = summaryController.saveSummaryForMatch(match, summary);
+        List<SetInfo> setInfos = SetsInfoService.getSetsInfoListFromSummaryResponseAndSummary(matchSummary, summary);
+        setInfos = setInfoController.saveSetsForSummary(summary, setInfos);
+        return SummaryResponse.makeFromBody(summary, match, setInfos);
+    }
+
+    @GetMapping("/{id}/matches/{matchId}")
+    public @ResponseBody SummaryResponse getSummaryOfMatch(@PathVariable String id, @PathVariable int matchId)
+    {
+        Summary summary = summaryController.getSummaryOfUserMatch(id, matchId);
+        return SummaryService.getSummaryResponseFromSummary(summary,
+                matchController.getUserMatch(id, matchId), summary.getSets());
     }
 }

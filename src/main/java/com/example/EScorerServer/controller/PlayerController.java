@@ -1,7 +1,7 @@
 package com.example.EScorerServer.controller;
 
 import com.example.EScorerServer.model.Player;
-import com.example.EScorerServer.service.PlayerRepository;
+import com.example.EScorerServer.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
