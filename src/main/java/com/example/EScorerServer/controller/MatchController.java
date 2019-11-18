@@ -8,6 +8,7 @@ import com.example.EScorerServer.repository.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -35,5 +36,9 @@ public class MatchController {
                 match.setGuest_team(teamController.saveOrUpdateTeam(match.getGuest_team()));
             return repository.save(match);
         }
+    }
+
+    public List<Match> getAllUserMatches(String id) {
+        return repository.getAllMatchesOfUser(id);
     }
 }

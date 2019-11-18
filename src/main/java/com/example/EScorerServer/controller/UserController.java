@@ -10,6 +10,7 @@ import com.example.EScorerServer.service.SummaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -94,6 +95,14 @@ public class UserController {
         List<SetInfo> setInfos = SetsInfoService.getSetsInfoListFromSummaryResponseAndSummary(matchSummary, summary);
         setInfos = setInfoController.saveSetsForSummary(summary, setInfos);
         return SummaryResponse.makeFromBody(summary, match, setInfos);
+    }
+
+    @GetMapping("/{id}/matches")
+    public @ResponseBody List<SummaryResponse> getAllSummariesOfUser(@PathVariable String id)
+    {
+        List<Summary> summaries = summaryController.getAllSummariesOfUserMatches(id);
+        List<Match> matches = matchController.getAllUserMatches(id);
+        return SummaryService.getSummaryResponseFromSummaries(summaries, matches);
     }
 
     @GetMapping("/{id}/matches/{matchId}")

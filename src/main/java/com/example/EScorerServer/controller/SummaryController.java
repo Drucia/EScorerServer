@@ -7,6 +7,10 @@ import com.example.EScorerServer.repository.SummaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller
 public class SummaryController {
     @Autowired
@@ -22,5 +26,10 @@ public class SummaryController {
             throw new MatchNotFoundException(match.getId());
         else
             return repository.save(summary);
+    }
+
+    public List<Summary> getAllSummariesOfUserMatches(String userId) {
+        return repository.getAllSummariesOfUser(userId).stream().sorted(Comparator.comparingInt(Summary::getMatchId))
+                .collect(Collectors.toList());
     }
 }
