@@ -18,14 +18,6 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
     EntityManager entityManager;
 
     @Override
-    public Optional<List<Team>> getAllTeamsOfUser(String userId) {
-        Query query = entityManager.createNativeQuery("SELECT * FROM teams WHERE USER_ID LIKE '" +
-                userId + "';", Team.class);
-        List<Team> result = query.getResultList();
-        return result.isEmpty() ? Optional.empty() : Optional.of(result);
-    }
-
-    @Override
     public Optional<Iterable<Player>> getAllPlayersOfUserTeams(String userId) {
         Query query = entityManager.createNativeQuery("select * from players " +
                 "where TEAM_ID in " +

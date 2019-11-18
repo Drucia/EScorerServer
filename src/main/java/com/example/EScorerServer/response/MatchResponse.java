@@ -9,6 +9,7 @@ public class MatchResponse {
     private Team guestTeam;
     private String name;
     private String userId;
+    private String date;
 
     public MatchResponse() {
     }
@@ -21,6 +22,14 @@ public class MatchResponse {
         response.setName(match.getGuest_team().getName() + " vs " + match.getHost_team().getName());
         response.setUserId(match.getUserId());
         return response;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public int getId() {

@@ -1,45 +1,68 @@
 package com.example.EScorerServer.controller;
 
+import com.example.EScorerServer.errors.TeamNotFoundException;
+import com.example.EScorerServer.model.Pair;
 import com.example.EScorerServer.model.Player;
-import com.example.EScorerServer.repository.PlayerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import com.example.EScorerServer.model.Team;
+import com.example.EScorerServer.service.PlayerService;
+import com.example.EScorerServer.service.TeamService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.*;
+import java.util.stream.Collectors;
 
-@Controller
+@RestController
+@RequestMapping(path="/players")
+@RequiredArgsConstructor
 public class PlayerController {
-    @Autowired
-    private PlayerRepository repository;
 
-    public Player savePlayer(Player player)
+    private final PlayerService playerService;
+    private final TeamService teamService;
+
+    @PostMapping
+    public @ResponseBody Player savePlayer(@Valid @RequestBody Player player)
     {
-        return repository.save(player);
+        return playerService.save(player);
     }
 
-    public void saveSeveralPlayers(int teamId, List<Player> players)
+    @PostMapping("/team/{teamId}/several")
+    public @ResponseBody List<Player> saveOrUpdateSeveralPlayersOfTeam(
+            @PathVariable int teamId, @RequestBody List<Player> players)
     {
-        List<Player> oldPlayers = getAllPlayersOfTeam(teamId);
-        List<Player> playersToDelete = new ArrayList<>(oldPlayers);
-        playersToDelete.removeAll(players);
-        if (!playersToDelete.isEmpty())
-            deleteSeveralPlayers(playersToDelete);
-        repository.saveAll(players);
+        return playerService.saveOrUpdatePlayersOfTeam(teamId, players);
     }
 
-    private List<Player> getAllPlayersOfTeam(int teamId){
-        return repository.getAllPlayersOfTeam(teamId);
+    @RequestMapping("/team/{teamId}")
+    private @ResponseBody List<Player> getAllPlayersOfTeam(@PathVariable int teamId){
+        return playerService.getPlayersOfTeam(teamId).orElseThrow(() -> new TeamNotFoundException(teamId));
+    }
+
+    @PostMapping("/team")
+    public @ResponseBody Pair<Team, Player> updateWholeTeam(@PathVariable String id, @RequestBody Pair<Team, Player> pair)
+    {
+        Team team = pair.getTeam();
+        team.setUserId(id);
+        Team newTeam = teamService.saveOrUpdateTeam(team);
+        List<Player> newPlayers = pair.getPlayers().stream().peek(player -> player.setTeam(newTeam))
+                .collect(Collectors.toList());
+        playerService.saveOrUpdatePlayersOfTeam(pair.getTeam().getId(), newPlayers);
+
+        return new Pair<>(newTeam, newPlayers);
     }
 
     @DeleteMapping
-    public void deletePlayer(@RequestBody Player player)
+    private @ResponseBody boolean deletePlayer(@RequestBody Player player)
     {
-        repository.delete(player);
+        playerService.delete(player);
+        return true;
     }
 
-    public void deleteSeveralPlayers(Iterable<Player> players)
+    @DeleteMapping("several")
+    public @ResponseBody boolean deleteSeveralPlayers(@RequestBody List<Player> players)
     {
-        repository.deleteAll(players);
+        playerService.deleteAll(players);
+        return true;
     }
 }

@@ -1,23 +1,35 @@
 package com.example.EScorerServer.controller;
 
+import com.example.EScorerServer.errors.TeamNotFoundException;
 import com.example.EScorerServer.model.Team;
-import com.example.EScorerServer.repository.TeamRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import com.example.EScorerServer.service.TeamService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import javax.validation.Valid;
+import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping(path="/teams")
+@RequiredArgsConstructor
 public class TeamController {
-    @Autowired
-    private TeamRepository repository;
 
-    public Team saveOrUpdateTeam(Team team)
+    private final TeamService teamService;
+
+    @PostMapping
+    public @ResponseBody Team saveOrUpdateTeam(@Valid @RequestBody Team team)
     {
-        return repository.save(team);
+        return teamService.saveOrUpdateTeam(team);
     }
 
-    public Optional<Team> getTeam(Team team) {
-        return repository.findById(team.getId());
+    @GetMapping("/{teamId}")
+    public @ResponseBody Team getTeam(@PathVariable int teamId) {
+        return teamService.getTeam(teamId).orElseThrow(() -> new TeamNotFoundException(teamId));
+    }
+
+    @GetMapping("/user/{userId}")
+    public @ResponseBody List<Team> getTeams(@PathVariable String userId)
+    {
+        return teamService.getAllTeamsOfUser(userId);
     }
 }

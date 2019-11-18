@@ -1,35 +1,52 @@
 package com.example.EScorerServer.controller;
 
-import com.example.EScorerServer.errors.MatchNotFoundException;
 import com.example.EScorerServer.model.Match;
 import com.example.EScorerServer.model.Summary;
-import com.example.EScorerServer.repository.SummaryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import com.example.EScorerServer.response.SummaryResponse;
+import com.example.EScorerServer.service.MatchService;
+import com.example.EScorerServer.service.SummaryService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Controller
+@RestController
+@RequestMapping(path="/summaries")
+@RequiredArgsConstructor
 public class SummaryController {
-    @Autowired
-    private SummaryRepository repository;
+    private final SummaryService summaryService;
+    private final MatchService matchService;
 
-    public Summary getSummaryOfUserMatch(String userId, int matchId) {
-        // todo check if is user is connected with this match
-        return repository.findById(matchId).orElseThrow(() -> new MatchNotFoundException(matchId));
+    @GetMapping("/user/{userId}")
+    public @ResponseBody List<SummaryResponse> getAllSummariesOfUser(@PathVariable String userId)
+    {
+        List<Summary> summaries = summaryController.getAllSummariesOfUserMatches(id);
+        List<Match> matches = matchController.getAllUserMatches(id);
+        return SummaryService.getSummaryResponseFromSummaries(summaries, matches);
     }
 
-    public Summary saveSummaryForMatch(Match match, Summary summary) {
-        if (match.getId() != summary.getMatchId())
-            throw new MatchNotFoundException(match.getId());
-        else
-            return repository.save(summary);
+    @GetMapping("/{id}/matches/{matchId}")
+    public @ResponseBody SummaryResponse getSummaryOfMatch(@PathVariable String id, @PathVariable int matchId)
+    {
+        Summary summary = summaryController.getSummaryOfUserMatch(id, matchId);
+        return SummaryService.getSummaryResponseFromSummary(summary,
+                matchController.getUserMatch(id, matchId), summary.getSets());
     }
 
-    public List<Summary> getAllSummariesOfUserMatches(String userId) {
-        return repository.getAllSummariesOfUser(userId).stream().sorted(Comparator.comparingInt(Summary::getMatchId))
-                .collect(Collectors.toList());
-    }
+//    public Summary getSummaryOfUserMatch(String userId, int matchId) {
+//        // todo check if is user is connected with this match
+//        return repository.findById(matchId).orElseThrow(() -> new MatchNotFoundException(matchId));
+//    }
+//
+//    public Summary saveSummaryForMatch(Match match, Summary summary) {
+//        if (match.getId() != summary.getMatchId())
+//            throw new MatchNotFoundException(match.getId());
+//        else
+//            return repository.save(summary);
+//    }
+//
+//    public List<Summary> getAllSummariesOfUserMatches(String userId) {
+//        return repository.getAllSummariesOfUser(userId).stream().sorted(Comparator.comparingInt(Summary::getMatchId))
+//                .collect(Collectors.toList());
+//    }
 }

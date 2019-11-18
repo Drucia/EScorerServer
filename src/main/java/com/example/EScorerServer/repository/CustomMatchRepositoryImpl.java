@@ -6,15 +6,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Optional;
 
 public class CustomMatchRepositoryImpl implements CustomMatchRepository {
     @PersistenceContext
     EntityManager entityManager;
 
     @Override
-    public List<Match> getAllMatchesOfUser(String userId) {
+    public Optional<List<Match>> getAllMatchesOfUser(String userId) {
         Query query = entityManager.createNativeQuery("select * from matches where USER_ID LIKE '" + userId + "';",
                 Match.class);
-        return query.getResultList();
+        List<Match> result = query.getResultList();
+        return result.isEmpty() ? Optional.empty() : Optional.of(result);
     }
 }

@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional(readOnly = true)
@@ -16,9 +17,10 @@ public class CustomPlayerRepositoryImpl implements CustomPlayerRepository {
     EntityManager entityManager;
 
     @Override
-    public List<Player> getAllPlayersOfTeam(int teamId) {
+    public Optional<List<Player>> getAllPlayersOfTeam(int teamId) {
         Query query = entityManager.createNativeQuery("SELECT * FROM players WHERE TEAM_ID = " +
                 teamId + ";", Player.class);
-        return query.getResultList();
+        List<Player> result = query.getResultList();
+        return result.isEmpty() ? Optional.empty() : Optional.of(result);
     }
 }

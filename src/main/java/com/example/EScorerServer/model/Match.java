@@ -27,10 +27,10 @@ public class Match {
     public Match() {
     }
 
-    public static Match makeFromBody(MatchResponse response, String date)
+    public static Match makeFromBody(MatchResponse response)
     {
         Match match = new Match();
-        match.setDate(date);
+        match.setDate(response.getDate());
         match.setHost_team(response.getHostTeam());
         match.setGuest_team(response.getGuestTeam());
         match.setUserId(response.getUserId());
