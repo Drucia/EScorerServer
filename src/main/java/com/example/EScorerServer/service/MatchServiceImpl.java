@@ -22,4 +22,9 @@ public class MatchServiceImpl implements MatchService {
     public Optional<List<Match>> getAllMatchesOfUser(String userId) {
         return matchRepository.getAllMatchesOfUser(userId);
     }
+
+    @Override
+    public Optional<Match> getMatch(int matchId) {
+        return matchRepository.findById(matchId);
+    }
 }

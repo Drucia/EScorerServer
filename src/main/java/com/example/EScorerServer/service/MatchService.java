@@ -8,8 +8,5 @@ import java.util.Optional;
 public interface MatchService {
     Match save(Match match);
     Optional<List<Match>> getAllMatchesOfUser(String userId);
-//    public static Match getMatchFromSummaryResponseAndSummary(SummaryResponse response)
-//    {
-//        return Match.makeFromBody(response.getMatch(), response.getDate());
-//    }
+    Optional<Match> getMatch(int matchId);
 }

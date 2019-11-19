@@ -40,10 +40,11 @@ public class PlayerController {
     }
 
     @PostMapping("/team")
-    public @ResponseBody Pair<Team, Player> updateWholeTeam(@PathVariable String id, @RequestBody Pair<Team, Player> pair)
+    public @ResponseBody Pair<Team, Player> saveOrUpdateWholeTeam(@RequestParam String userId,
+                                                                  @RequestBody Pair<Team, Player> pair)
     {
         Team team = pair.getTeam();
-        team.setUserId(id);
+        team.setUserId(userId);
         Team newTeam = teamService.saveOrUpdateTeam(team);
         List<Player> newPlayers = pair.getPlayers().stream().peek(player -> player.setTeam(newTeam))
                 .collect(Collectors.toList());

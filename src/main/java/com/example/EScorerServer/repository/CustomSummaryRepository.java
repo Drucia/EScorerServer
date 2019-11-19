@@ -3,7 +3,9 @@ package com.example.EScorerServer.repository;
 import com.example.EScorerServer.model.Summary;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CustomSummaryRepository {
-    List<Summary> getAllSummariesOfUser(String userId);
+    Optional<List<Summary>> getAllSummariesOfUser(String userId);
+    Optional<Summary> getSummaryByMatch(int matchId);
 }

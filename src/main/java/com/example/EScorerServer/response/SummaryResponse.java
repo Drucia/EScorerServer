@@ -4,6 +4,7 @@ import com.example.EScorerServer.model.SetInfo;
 import com.example.EScorerServer.model.Summary;
 import com.example.EScorerServer.model.Team;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,15 @@ public class SummaryResponse {
         response.setGuestSets(summary.getSetsGuest());
         response.setSets(SetInfoResponse.makeFromBody(setsInfo));
         return response;
+    }
+
+    public static List<SummaryResponse> makeFromBody(List<Summary> summaries, List<Match> matches) {
+        List<SummaryResponse> responses = new ArrayList<>();
+        for (int i = 0; i < summaries.size(); i++) {
+            Summary summary = summaries.get(i);
+            responses.add(SummaryResponse.makeFromBody(summary, matches.get(i), summary.getSets()));
+        }
+        return responses;
     }
 
     public int getId() {

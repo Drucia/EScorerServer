@@ -27,11 +27,6 @@ public class MatchController {
     @Autowired
     private TeamService teamService;
 
-//    public Match getUserMatch(String userId, int matchId) {
-//        // todo check if user is owner of match
-//        return repository.findById(matchId).orElseThrow(() -> new MatchNotFoundException(matchId));
-//    }
-
     @PostMapping("/user/{userId}")
     public @ResponseBody MatchResponse save(@PathVariable String userId, @Valid @RequestBody MatchResponse match)
     {
@@ -46,8 +41,8 @@ public class MatchController {
         return MatchResponse.makeFromBody(matchService.save(matchEntity));
     }
 
-    @RequestMapping
-    public @ResponseBody List<MatchResponse> getAllUserMatches(String userId) {
+    @RequestMapping("/user/{userId}")
+    public @ResponseBody List<MatchResponse> getAllUserMatches(@PathVariable String userId) {
         Optional<List<Match>> result = matchService.getAllMatchesOfUser(userId);
         if (!result.isPresent())
             throw new UserNotFoundException(userId);
