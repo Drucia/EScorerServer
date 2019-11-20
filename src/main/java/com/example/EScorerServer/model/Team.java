@@ -46,6 +46,11 @@ public class Team {
         this.shortName = shortName;
     }
 
+    public Team(String name, String shortName) {
+        this.name = name;
+        this.shortName = shortName;
+    }
+
     public int getId() {
         return id;
     }
