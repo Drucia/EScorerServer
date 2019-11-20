@@ -35,7 +35,7 @@ public class UserEntityRepositoryTests {
     @Test
     public void whenSavedThenFindById()
     {
-        userRepository.save(new User("testowy", "Test", "User"));
+        //userRepository.save(new User("testowy", "Test", "User"));
         assertThat(userRepository.findById("testowy").isPresent()).isTrue();
     }
 

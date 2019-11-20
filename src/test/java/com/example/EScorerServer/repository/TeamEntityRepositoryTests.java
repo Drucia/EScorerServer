@@ -28,6 +28,7 @@ public class TeamEntityRepositoryTests {
     @Autowired private JdbcTemplate jdbcTemplate;
     @Autowired private EntityManager entityManager;
     @Autowired private TeamRepository teamRepository;
+    @Autowired private UserRepository userRepository;
 
     User user;
     Team team;
@@ -51,14 +52,11 @@ public class TeamEntityRepositoryTests {
     @Test
     public void saveUserAndThenAddUserTeam()
     {
-        team.setUserId(user.getId());
+        User savedUser = userRepository.save(user);
+        team.setUserId(savedUser.getId());
         teamRepository.save(team);
         Optional<List<Team>> result = teamRepository.getAllTeamsOfUser(user.getId());
         assertThat(result.get().size()).isEqualTo(1);
     }
 
-    @Test
-    public void whenSavedUpdateUser()
-    {
-    }
 }
