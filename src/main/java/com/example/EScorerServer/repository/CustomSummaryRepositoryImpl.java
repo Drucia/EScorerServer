@@ -16,7 +16,7 @@ public class CustomSummaryRepositoryImpl implements CustomSummaryRepository {
     public Optional<List<Summary>> getAllSummariesOfUser(String userId) {
         Query query = entityManager.createNativeQuery("select s.ID, s.MATCH_ID, s.WINNER_ID, s.SETS_HOME," +
                 " s.SETS_GUEST\n" +
-                "from summary s join matches m on s.MATCH_ID = m.ID\n" +
+                "from summaries s join matches m on s.MATCH_ID = m.ID\n" +
                 "where m.USER_ID LIKE '" + userId + "';", Summary.class);
         List<Summary> result = query.getResultList();
         return result.isEmpty() ? Optional.empty() : Optional.of(result);
@@ -24,7 +24,7 @@ public class CustomSummaryRepositoryImpl implements CustomSummaryRepository {
 
     @Override
     public Optional<Summary> getSummaryByMatch(int matchId) {
-        Query query = entityManager.createNativeQuery("select * from summary where MATCH_ID = " + matchId +";",
+        Query query = entityManager.createNativeQuery("select * from summaries where MATCH_ID = " + matchId +";",
                 Summary.class);
         Summary result = (Summary) query.getSingleResult();
         return result == null ? Optional.empty() : Optional.of(result);

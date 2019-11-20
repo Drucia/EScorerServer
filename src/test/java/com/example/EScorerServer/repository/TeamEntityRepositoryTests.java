@@ -54,7 +54,6 @@ public class TeamEntityRepositoryTests {
         team.setUserId(user.getId());
         teamRepository.save(team);
         Optional<List<Team>> result = teamRepository.getAllTeamsOfUser(user.getId());
-        assertThat(result.isPresent()).isTrue();
         assertThat(result.get().size()).isEqualTo(1);
     }
 
