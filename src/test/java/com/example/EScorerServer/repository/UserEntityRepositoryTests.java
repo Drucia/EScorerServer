@@ -8,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.jws.soap.SOAPBinding;
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
@@ -35,7 +34,7 @@ public class UserEntityRepositoryTests {
     @Test
     public void whenSavedThenFindById()
     {
-        //userRepository.save(new User("testowy", "Test", "User"));
+        userRepository.save(new User("testowy", "Test", "User"));
         assertThat(userRepository.findById("testowy").isPresent()).isTrue();
     }
 

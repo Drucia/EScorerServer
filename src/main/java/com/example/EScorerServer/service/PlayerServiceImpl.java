@@ -39,7 +39,7 @@ public class PlayerServiceImpl implements PlayerService {
     public List<Player> saveOrUpdatePlayersOfTeam(int teamId, List<Player> players) {
         Optional<List<Player>> oldPlayers = getPlayersOfTeam(teamId);
         if (!oldPlayers.isPresent())
-            throw new TeamNotFoundException(teamId);
+            oldPlayers = Optional.of(new ArrayList<>());
         List<Player> playersToDelete = new ArrayList<>(oldPlayers.get());
         playersToDelete.removeAll(players);
         if (!playersToDelete.isEmpty())

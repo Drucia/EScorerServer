@@ -48,7 +48,7 @@ public class PlayerController {
         Team newTeam = teamService.saveOrUpdateTeam(team);
         List<Player> newPlayers = pair.getPlayers().stream().peek(player -> player.setTeam(newTeam))
                 .collect(Collectors.toList());
-        playerService.saveOrUpdatePlayersOfTeam(pair.getTeam().getId(), newPlayers);
+        newPlayers = playerService.saveOrUpdatePlayersOfTeam(pair.getTeam().getId(), newPlayers);
 
         return new Pair<>(newTeam, newPlayers);
     }
