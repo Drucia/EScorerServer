@@ -1,6 +1,8 @@
 package com.example.EScorerServer.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="players")
@@ -10,18 +12,28 @@ public class Player {
     @Column(name = "ID")
     private int id;
 
+    @NotEmpty
     @Column(name = "NAME")
     private String name;
 
+    @NotEmpty
     @Column(name = "SURNAME")
     private String surname;
 
+    @NotNull
     @ManyToOne
     private Team team;
 
     public Player(){}
 
     public Player(String name, String surname, Team team) {
+        this.name = name;
+        this.surname = surname;
+        this.team = team;
+    }
+
+    public Player(int id, @NotEmpty String name, @NotEmpty String surname, @NotNull Team team) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.team = team;

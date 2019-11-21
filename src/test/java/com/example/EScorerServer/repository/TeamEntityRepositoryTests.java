@@ -4,7 +4,6 @@ import com.example.EScorerServer.model.Team;
 import com.example.EScorerServer.model.User;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -30,10 +29,10 @@ public class TeamEntityRepositoryTests {
     @Autowired private TeamRepository teamRepository;
     @Autowired private UserRepository userRepository;
 
-    User user;
-    Team team;
+    private User user;
+    private Team team;
 
-    @BeforeAll
+    @Before
     public void initUser()
     {
         user = new User("testowy", "Pan", "Test");
@@ -47,6 +46,7 @@ public class TeamEntityRepositoryTests {
         assertThat(jdbcTemplate).isNotNull();
         assertThat(entityManager).isNotNull();
         assertThat(teamRepository).isNotNull();
+        assertThat(userRepository).isNotNull();
     }
 
     @Test
@@ -59,4 +59,29 @@ public class TeamEntityRepositoryTests {
         assertThat(result.get().size()).isEqualTo(1);
     }
 
+    @Test
+    public void saveUserTeamAndThenUpdate()
+    {
+        User savedUser = userRepository.save(user);
+        team.setUserId(savedUser.getId());
+        Team savedTeam = teamRepository.save(team);
+        savedTeam.setShortName("dreamers");
+        Optional<List<Team>> result = teamRepository.getAllTeamsOfUser(user.getId());
+        assertThat(result.get().size()).isEqualTo(1);
+    }
+
+    @Test
+    public void getAllTeamsOfUserWithEmptyTeams()
+    {
+        userRepository.save(user);
+        Optional<List<Team>> result = teamRepository.getAllTeamsOfUser(user.getId());
+        assertThat(result.isPresent()).isFalse();
+    }
+
+    @Test
+    public void getAllTeamsOfUserWhichNotExist()
+    {
+        Optional<List<Team>> result = teamRepository.getAllTeamsOfUser(user.getId());
+        assertThat(result.isPresent()).isFalse();
+    }
 }

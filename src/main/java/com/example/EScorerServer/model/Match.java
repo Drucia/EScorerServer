@@ -3,6 +3,9 @@ package com.example.EScorerServer.model;
 import com.example.EScorerServer.response.MatchResponse;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 @Table(name="matches")
@@ -12,15 +15,19 @@ public class Match {
     @Column(name = "ID")
     private int id;
 
+    @NotBlank
     @Column(name = "DATE")
     private String date;
 
+    @NotNull
     @ManyToOne
     private Team host_team;
 
+    @NotNull
     @ManyToOne
     private Team guest_team;
 
+    @NotBlank
     @Column(name="USER_ID")
     private String userId;
 
@@ -76,5 +83,20 @@ public class Match {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Match match = (Match) o;
+        return id == match.id &&
+                date.equals(match.date) &&
+                userId.equals(match.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, userId);
     }
 }

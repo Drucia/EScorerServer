@@ -3,7 +3,11 @@ package com.example.EScorerServer.model;
 import com.example.EScorerServer.response.SummaryResponse;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="summaries")
@@ -16,6 +20,7 @@ public class Summary {
     @Column(name = "MATCH_ID", unique = true)
     private int matchId;
 
+    @NotNull
     @ManyToOne
     private Team winner;
 
@@ -29,6 +34,14 @@ public class Summary {
     private List<SetInfo> sets;
 
     public Summary() {
+    }
+
+    public Summary(int id, int matchId, @NotNull Team winner, int setsHome, int setsGuest) {
+        this.id = id;
+        this.matchId = matchId;
+        this.winner = winner;
+        this.setsHome = setsHome;
+        this.setsGuest = setsGuest;
     }
 
     public static Summary makeFromBody(SummaryResponse response, Match match)
@@ -87,5 +100,19 @@ public class Summary {
 
     public void setSets(List<SetInfo> sets) {
         this.sets = sets;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Summary summary = (Summary) o;
+        return id == summary.id &&
+                matchId == summary.matchId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, matchId);
     }
 }

@@ -1,10 +1,8 @@
 package com.example.EScorerServer.controller;
 
-import com.example.EScorerServer.errors.MatchNotFoundException;
 import com.example.EScorerServer.errors.UserNotFoundException;
 import com.example.EScorerServer.model.Match;
 import com.example.EScorerServer.model.Team;
-import com.example.EScorerServer.repository.MatchRepository;
 import com.example.EScorerServer.response.MatchResponse;
 import com.example.EScorerServer.service.MatchService;
 import com.example.EScorerServer.service.TeamService;
@@ -19,7 +17,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path="/matches")
-@RequiredArgsConstructor
 public class MatchController {
     @Autowired
     private MatchService matchService;

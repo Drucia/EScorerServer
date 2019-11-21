@@ -3,6 +3,7 @@ package com.example.EScorerServer.service;
 import com.example.EScorerServer.errors.TeamNotFoundException;
 import com.example.EScorerServer.model.Player;
 import com.example.EScorerServer.repository.PlayerRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

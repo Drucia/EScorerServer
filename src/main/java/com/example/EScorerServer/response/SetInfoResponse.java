@@ -20,6 +20,18 @@ public class SetInfoResponse {
     public SetInfoResponse() {
     }
 
+    public SetInfoResponse(int shiftsHome, int shiftsGuest, int timesHome, int timesGust, int pointsHome,
+                           int pointsGuest, int set, int time) {
+        this.shiftsHome = shiftsHome;
+        this.shiftsGuest = shiftsGuest;
+        this.timesHome = timesHome;
+        this.timesGust = timesGust;
+        this.pointsHome = pointsHome;
+        this.pointsGuest = pointsGuest;
+        this.set = set;
+        this.time = time;
+    }
+
     public static Map<Integer, SetInfoResponse> makeFromBody(List<SetInfo> sets) {
         Map<Integer, SetInfoResponse> response = new HashMap<>();
         for (SetInfo info : sets)

@@ -3,6 +3,7 @@ package com.example.EScorerServer.service;
 import com.example.EScorerServer.errors.UserNotFoundException;
 import com.example.EScorerServer.model.User;
 import com.example.EScorerServer.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

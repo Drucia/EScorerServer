@@ -20,6 +20,16 @@ public class SummaryResponse {
     public SummaryResponse() {
     }
 
+    public SummaryResponse(String date, MatchResponse match, Team winner, int hostSets, int guestSets,
+                           Map<Integer, SetInfoResponse> sets) {
+        this.date = date;
+        this.match = match;
+        this.winner = winner;
+        this.hostSets = hostSets;
+        this.guestSets = guestSets;
+        this.sets = sets;
+    }
+
     public static SummaryResponse makeFromBody(Summary summary, Match match, List<SetInfo> setsInfo) {
         SummaryResponse response = new SummaryResponse();
         response.setId(summary.getId());

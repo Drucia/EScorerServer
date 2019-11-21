@@ -5,6 +5,7 @@ import com.example.EScorerServer.response.SetInfoResponse;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Entity
@@ -143,5 +144,20 @@ public class SetInfo {
 
     public void setPointsGuest(int pointsGuest) {
         this.pointsGuest = pointsGuest;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SetInfo setInfo = (SetInfo) o;
+        return id == setInfo.id &&
+                set == setInfo.set &&
+                summary.equals(setInfo.summary);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, summary, set);
     }
 }

@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 @Table(name="users")
@@ -12,9 +15,11 @@ public class User {
     @Column(name="ID")
     private String id;
 
+    @NotBlank
     @Column(name="NAME")
     private String name;
 
+    @NotBlank
     @Column(name="SURNAME")
     private String surname;
 
@@ -97,4 +102,16 @@ public class User {
         return name + " " + surname;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id.equals(user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

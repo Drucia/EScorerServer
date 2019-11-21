@@ -3,6 +3,8 @@ package com.example.EScorerServer.response;
 import com.example.EScorerServer.model.Match;
 import com.example.EScorerServer.model.Team;
 
+import java.util.Objects;
+
 public class MatchResponse {
     private int id;
     private Team hostTeam;
@@ -12,6 +14,14 @@ public class MatchResponse {
     private String date;
 
     public MatchResponse() {
+    }
+
+    public MatchResponse(Team hostTeam, Team guestTeam, String name, String userId, String date) {
+        this.hostTeam = hostTeam;
+        this.guestTeam = guestTeam;
+        this.name = name;
+        this.userId = userId;
+        this.date = date;
     }
 
     public static MatchResponse makeFromBody(Match match) {
@@ -70,5 +80,19 @@ public class MatchResponse {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MatchResponse that = (MatchResponse) o;
+        return id == that.id &&
+                userId.equals(that.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userId);
     }
 }
