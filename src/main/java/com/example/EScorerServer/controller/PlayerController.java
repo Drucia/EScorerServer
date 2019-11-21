@@ -31,6 +31,11 @@ public class PlayerController {
     public @ResponseBody List<Player> saveOrUpdateSeveralPlayersOfTeam(
             @PathVariable int teamId, @RequestBody List<Player> players)
     {
+        Optional<Team> teamResult = teamService.getTeam(teamId);
+        if (!teamResult.isPresent())
+            throw new TeamNotFoundException(teamId);
+        Team team = teamResult.get();
+        players.forEach(player -> player.setTeam(team));
         return playerService.saveOrUpdatePlayersOfTeam(teamId, players);
     }
 
@@ -46,8 +51,8 @@ public class PlayerController {
         Team team = pair.getTeam();
         team.setUserId(userId);
         Team newTeam = teamService.saveOrUpdateTeam(team);
-        List<Player> newPlayers = pair.getPlayers().stream().peek(player -> player.setTeam(newTeam))
-                .collect(Collectors.toList());
+        List<Player> newPlayers = pair.getPlayers();
+        newPlayers.forEach(player -> player.setTeam(newTeam));
         newPlayers = playerService.saveOrUpdatePlayersOfTeam(pair.getTeam().getId(), newPlayers);
 
         return new Pair<>(newTeam, newPlayers);
