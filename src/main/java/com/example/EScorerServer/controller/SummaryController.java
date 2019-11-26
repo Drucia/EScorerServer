@@ -5,10 +5,12 @@ import com.example.EScorerServer.errors.UserNotFoundException;
 import com.example.EScorerServer.model.Match;
 import com.example.EScorerServer.model.SetInfo;
 import com.example.EScorerServer.model.Summary;
+import com.example.EScorerServer.model.Team;
 import com.example.EScorerServer.response.SummaryResponse;
 import com.example.EScorerServer.service.MatchService;
 import com.example.EScorerServer.service.SetInfoService;
 import com.example.EScorerServer.service.SummaryService;
+import com.example.EScorerServer.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,8 @@ public class SummaryController {
     private MatchService matchService;
     @Autowired
     private SetInfoService setInfoService;
+    @Autowired
+    private TeamService teamService;
 
     @GetMapping("/user/{userId}")
     public @ResponseBody List<SummaryResponse> getAllSummariesOfUser(@PathVariable String userId)
@@ -46,6 +50,12 @@ public class SummaryController {
     {
         Match match = Match.makeFromBody(matchSummary.getMatch());
         match.setUserId(userId);
+        Optional<Team> team = teamService.getTeam(match.getHost_team().getId());
+        if (!team.isPresent())
+            match.setHost_team(teamService.saveOrUpdateTeam(match.getHost_team()));
+        team = teamService.getTeam(match.getGuest_team().getId());
+        if (!team.isPresent())
+            match.setGuest_team(teamService.saveOrUpdateTeam(match.getGuest_team()));
         match = matchService.save(match);
         Summary summary = Summary.makeFromBody(matchSummary, match);
         summary.setMatchId(match.getId());
