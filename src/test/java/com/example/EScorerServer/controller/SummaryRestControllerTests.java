@@ -10,6 +10,7 @@ import com.example.EScorerServer.response.SummaryResponse;
 import com.example.EScorerServer.service.MatchService;
 import com.example.EScorerServer.service.SetInfoService;
 import com.example.EScorerServer.service.SummaryService;
+import com.example.EScorerServer.service.TeamService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,6 +49,9 @@ class SummaryRestControllerTests {
     private MatchService matchService;
 
     @MockBean
+    private TeamService teamService;
+
+    @MockBean
     private SetInfoService setInfoService;
 
     private List<SummaryResponse> summaries;
@@ -56,6 +60,7 @@ class SummaryRestControllerTests {
     private HashMap<Integer, SetInfoResponse> sets3;
     private HashMap<Integer, SetInfoResponse> sets4;
     private HashMap<Integer, SetInfoResponse> sets5;
+
     @BeforeEach
     void init() {
         userId = "user";
@@ -103,6 +108,7 @@ class SummaryRestControllerTests {
         assertNotNull(objectMapper);
         assertNotNull(summaryService);
         assertNotNull(matchService);
+        assertNotNull(teamService);
         assertNotNull(setInfoService);
     }
 

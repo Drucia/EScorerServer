@@ -2,7 +2,6 @@ package com.example.EScorerServer.controller;
 
 import com.example.EScorerServer.model.Player;
 import com.example.EScorerServer.model.Team;
-import com.example.EScorerServer.model.User;
 import com.example.EScorerServer.service.PlayerService;
 import com.example.EScorerServer.service.TeamService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,7 +24,6 @@ import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

@@ -3,8 +3,6 @@ package com.example.EScorerServer.model;
 import com.example.EScorerServer.response.SummaryResponse;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
