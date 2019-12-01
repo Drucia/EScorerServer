@@ -27,4 +27,9 @@ public class MatchServiceImpl implements MatchService {
     public Optional<Match> getMatch(int matchId) {
         return matchRepository.findById(matchId);
     }
+
+    @Override
+    public void deleteMatch(int matchId) {
+        matchRepository.deleteById(matchId);
+    }
 }

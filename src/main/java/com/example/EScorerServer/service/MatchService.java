@@ -9,4 +9,5 @@ public interface MatchService {
     Match save(Match match);
     Optional<List<Match>> getAllMatchesOfUser(String userId);
     Optional<Match> getMatch(int matchId);
+    void deleteMatch(int matchId);
 }

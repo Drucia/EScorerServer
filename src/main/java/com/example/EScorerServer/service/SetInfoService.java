@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface SetInfoService {
     List<SetInfo> saveAll(List<SetInfo> sets);
+    boolean deleteAllWhereSummaryId(int summaryId);
 }

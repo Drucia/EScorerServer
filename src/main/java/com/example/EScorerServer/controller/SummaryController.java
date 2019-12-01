@@ -48,8 +48,14 @@ public class SummaryController {
     @DeleteMapping("/{summaryId}")
     public @ResponseBody Boolean deleteSummary(@PathVariable int summaryId)
     {
+        Optional<Summary> summaryResult = summaryService.getSummary(summaryId);
+        if (!summaryResult.isPresent())
+            throw new SummaryNotFoundException(summaryId);
+        Summary summary = summaryResult.get();
+        boolean res = setInfoService.deleteAllWhereSummaryId(summaryId);
         summaryService.deleteSummary(summaryId);
-        return true;
+        matchService.deleteMatch(summary.getMatchId());
+        return res;
     }
 
     @PostMapping("/user/{userId}")

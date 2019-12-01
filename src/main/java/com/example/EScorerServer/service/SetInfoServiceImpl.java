@@ -16,4 +16,9 @@ public class SetInfoServiceImpl implements SetInfoService {
     public List<SetInfo> saveAll(List<SetInfo> sets) {
         return setInfoRepository.saveAll(sets);
     }
+
+    @Override
+    public boolean deleteAllWhereSummaryId(int summaryId) {
+        return setInfoRepository.deleteAllBySummaryId(summaryId);
+    }
 }

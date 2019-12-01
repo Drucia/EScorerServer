@@ -10,4 +10,5 @@ public interface SummaryService {
     void deleteSummary(int summaryId);
     Optional<Summary> getSummaryOfMatch(int matchId);
     Summary save(Summary summary);
+    Optional<Summary> getSummary(int summaryId);
 }

@@ -33,4 +33,9 @@ public class SummaryServiceImpl implements SummaryService {
     public Summary save(Summary summary) {
         return summaryRepository.save(summary);
     }
+
+    @Override
+    public Optional<Summary> getSummary(int summaryId) {
+        return summaryRepository.findById(summaryId);
+    }
 }
