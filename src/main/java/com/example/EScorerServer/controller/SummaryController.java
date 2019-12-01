@@ -51,12 +51,16 @@ public class SummaryController {
         Match match = Match.makeFromBody(matchSummary.getMatch());
         match.setUserId(userId);
         boolean isHostWinner = matchSummary.getWinner().getId() == matchSummary.getMatch().getHostTeam().getId();
-        Optional<Team> team = teamService.getTeam(match.getHost_team().getId());
+        Team reqTeam = match.getHost_team();
+        Optional<Team> team = teamService.getTeam(reqTeam.getId());
         if (!team.isPresent()) {
+            reqTeam.setUserId(userId);
             match.setHost_team(teamService.saveOrUpdateTeam(match.getHost_team()));
         }
-        team = teamService.getTeam(match.getGuest_team().getId());
+        reqTeam = match.getGuest_team();
+        team = teamService.getTeam(reqTeam.getId());
         if (!team.isPresent()) {
+            reqTeam.setUserId(userId);
             match.setGuest_team(teamService.saveOrUpdateTeam(match.getGuest_team()));
         }
         match = matchService.save(match);

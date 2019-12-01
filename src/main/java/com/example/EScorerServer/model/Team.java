@@ -1,6 +1,7 @@
 package com.example.EScorerServer.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,6 +19,7 @@ public class Team {
     @Column(name="SHORT_NAME")
     private String shortName;
 
+    @NotNull
     @Column(name="USER_ID")
     private String userId;
 
