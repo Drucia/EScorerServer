@@ -6,7 +6,6 @@ import com.example.EScorerServer.model.Team;
 import com.example.EScorerServer.response.MatchResponse;
 import com.example.EScorerServer.service.MatchService;
 import com.example.EScorerServer.service.TeamService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -2,16 +2,16 @@ package com.example.EScorerServer.service;
 
 import com.example.EScorerServer.model.Summary;
 import com.example.EScorerServer.repository.SummaryRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class SummaryServiceImpl implements SummaryService {
-    private final SummaryRepository summaryRepository;
+    @Autowired
+    private SummaryRepository summaryRepository;
 
     @Override
     public Optional<List<Summary>> getAllSummariesOfUser(String userId) {

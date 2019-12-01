@@ -2,15 +2,15 @@ package com.example.EScorerServer.service;
 
 import com.example.EScorerServer.model.SetInfo;
 import com.example.EScorerServer.repository.SetInfoRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class SetInfoServiceImpl implements SetInfoService {
-    private final SetInfoRepository setInfoRepository;
+    @Autowired
+    private SetInfoRepository setInfoRepository;
 
     @Override
     public List<SetInfo> saveAll(List<SetInfo> sets) {

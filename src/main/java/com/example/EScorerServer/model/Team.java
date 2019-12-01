@@ -1,6 +1,7 @@
 package com.example.EScorerServer.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -91,7 +92,17 @@ public class Team {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return id == ((Team) obj).id;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return Objects.equals(name, team.name) &&
+                Objects.equals(shortName, team.shortName) &&
+                Objects.equals(userId, team.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, shortName, userId);
     }
 }

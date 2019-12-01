@@ -3,16 +3,16 @@ package com.example.EScorerServer.service;
 import com.example.EScorerServer.errors.UserNotFoundException;
 import com.example.EScorerServer.model.Team;
 import com.example.EScorerServer.repository.TeamRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class TeamServiceImpl implements TeamService {
-    private final TeamRepository teamRepository;
+    @Autowired
+    private TeamRepository teamRepository;
 
     @Override
     public List<Team> getAllTeamsOfUser(String userId) {

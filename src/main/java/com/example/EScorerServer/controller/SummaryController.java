@@ -50,15 +50,19 @@ public class SummaryController {
     {
         Match match = Match.makeFromBody(matchSummary.getMatch());
         match.setUserId(userId);
+        boolean isHostWinner = matchSummary.getWinner().getId() == matchSummary.getMatch().getHostTeam().getId();
         Optional<Team> team = teamService.getTeam(match.getHost_team().getId());
-        if (!team.isPresent())
+        if (!team.isPresent()) {
             match.setHost_team(teamService.saveOrUpdateTeam(match.getHost_team()));
+        }
         team = teamService.getTeam(match.getGuest_team().getId());
-        if (!team.isPresent())
+        if (!team.isPresent()) {
             match.setGuest_team(teamService.saveOrUpdateTeam(match.getGuest_team()));
+        }
         match = matchService.save(match);
         Summary summary = Summary.makeFromBody(matchSummary, match);
         summary.setMatchId(match.getId());
+        summary.setWinner(isHostWinner ? match.getHost_team() : match.getGuest_team());
         summary = summaryService.save(summary);
         List<SetInfo> setsInfo = SetInfo.makeFromBody(matchSummary.getSets(), summary);
         setsInfo = setInfoService.saveAll(setsInfo);
