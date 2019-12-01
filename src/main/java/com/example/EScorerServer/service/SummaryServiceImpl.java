@@ -19,9 +19,9 @@ public class SummaryServiceImpl implements SummaryService {
     }
 
     @Override
-    public void deleteSummary(Summary summary)
+    public void deleteSummary(int summaryId)
     {
-        summaryRepository.delete(summary);
+        summaryRepository.deleteById(summaryId);
     }
 
     @Override

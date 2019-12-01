@@ -45,10 +45,10 @@ public class SummaryController {
         return SummaryResponse.makeFromBody(summaries, matches);
     }
 
-    @DeleteMapping
-    public @ResponseBody Boolean deleteSummary(@Valid @RequestBody SummaryResponse summaryResponse)
+    @DeleteMapping("/{summaryId}")
+    public @ResponseBody Boolean deleteSummary(@PathVariable int summaryId)
     {
-        summaryService.deleteSummary(Summary.makeFromBody(summaryResponse));
+        summaryService.deleteSummary(summaryId);
         return true;
     }
 
