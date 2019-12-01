@@ -14,6 +14,7 @@ import com.example.EScorerServer.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +43,13 @@ public class SummaryController {
         List<Match> matches = matchesResult.get();
         assert matches.size() == summaries.size();
         return SummaryResponse.makeFromBody(summaries, matches);
+    }
+
+    @DeleteMapping
+    public @ResponseBody Boolean deleteSummary(@Valid @RequestBody SummaryResponse summaryResponse)
+    {
+        summaryService.deleteSummary(Summary.makeFromBody(summaryResponse));
+        return true;
     }
 
     @PostMapping("/user/{userId}")

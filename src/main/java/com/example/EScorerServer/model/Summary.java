@@ -52,6 +52,16 @@ public class Summary {
         return summary;
     }
 
+    public static Summary makeFromBody(SummaryResponse response)
+    {
+        Summary summary = new Summary();
+        summary.setMatchId(response.getId());
+        summary.setWinner(response.getWinner());
+        summary.setSetsHome(response.getHostSets());
+        summary.setSetsGuest(response.getGuestSets());
+        return summary;
+    }
+
     public int getId() {
         return id;
     }

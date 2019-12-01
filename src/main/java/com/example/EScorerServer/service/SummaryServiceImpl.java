@@ -19,6 +19,12 @@ public class SummaryServiceImpl implements SummaryService {
     }
 
     @Override
+    public void deleteSummary(Summary summary)
+    {
+        summaryRepository.delete(summary);
+    }
+
+    @Override
     public Optional<Summary> getSummaryOfMatch(int matchId) {
         return summaryRepository.getSummaryByMatch(matchId);
     }

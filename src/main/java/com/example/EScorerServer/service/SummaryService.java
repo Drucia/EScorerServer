@@ -7,6 +7,9 @@ import java.util.Optional;
 
 public interface SummaryService {
     Optional<List<Summary>> getAllSummariesOfUser(String userId);
+
+    void deleteSummary(Summary summary);
+
     Optional<Summary> getSummaryOfMatch(int matchId);
     Summary save(Summary summary);
 }
