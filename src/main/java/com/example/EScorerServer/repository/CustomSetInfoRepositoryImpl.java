@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Repository
-@Transactional(readOnly = true)
+@Transactional
 public class CustomSetInfoRepositoryImpl implements CustomSetInfoRepository {
     @PersistenceContext
     EntityManager entityManager;
